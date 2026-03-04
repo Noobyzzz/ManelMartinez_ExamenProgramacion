@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 private Rigidbody2D Rbody2D;
 private InputAction MoveAction;
@@ -13,7 +13,7 @@ public float jumpForce = 10f;
 private InputAction jumpAction;
 
 private GroundSensor sensor;
-private SpriteRenderer renderer;
+private SpriteRenderer render;
 
     void Awake()
     {
@@ -22,7 +22,8 @@ private SpriteRenderer renderer;
         MoveAction = InputSystem.actions["move"];
         jumpAction = InputSystem.actions["jump"];
 
-        sensor.GetComponentInChildren<GroundSensor>();
+        sensor = GetComponentInChildren<GroundSensor>();
+        render = GetComponent<SpriteRenderer>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,12 +34,12 @@ private SpriteRenderer renderer;
     // Update is called once per frame
     void Update()
     {
-        moveDirection = MoveAction.ReadValue<Vector2>;
+        moveDirection = MoveAction.ReadValue<Vector2>();
 
         if(jumpAction.WasPressedThisFrame () && sensor.isGrounded)
         
         {
-            Rbody2D.AddForce (Vector2.up * jumpForce, ForcemMode2D.Impulse);
+            Rbody2D.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
 
         }
         
